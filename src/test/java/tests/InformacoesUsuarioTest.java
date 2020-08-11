@@ -12,10 +12,16 @@ public class InformacoesUsuarioTest {
         System.setProperty("webdriver.chrome.driver", "C:\\Desafio2020\\Drivers\\chromedriver\\chromedriver.exe");
         WebDriver navegador = new ChromeDriver();
 
+        //Maximizar a tela
+        navegador.manage().window().maximize();
+
         //Navegando para a páginado Taskit!
         navegador.get("http://www.juliodelima.com.br/taskit");
 
         //Validação
         assertEquals(1, 1);
+
+        //Fechar o navegador
+        navegador.close();
     }
 }

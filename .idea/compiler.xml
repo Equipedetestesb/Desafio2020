@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Desafio2020" />
         <module name="desafio2020" />
+        <module name="Desafio2020" />
       </profile>
     </annotationProcessing>
   </component>

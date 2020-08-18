@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.concurrent.TimeUnit;
 
@@ -34,8 +35,6 @@ public class InformacoesUsuarioTest {
 
     @Test
     public void testAdicionarUmaInformacaoAdicionalDoUsuario(){
-
-
         //Clicar no link que possui o texto Sign in
         WebElement linkSignIn = navegador.findElement(By.linkText("Sign in"));
         linkSignIn.click();
@@ -46,52 +45,38 @@ public class InformacoesUsuarioTest {
         //Digitar no campo com o name "login" que está dentro do formulário de id "signinbox" o texto "julio0001"
         formularioSignInbox.findElement(By.name("login")).sendKeys("julio0001");
 
-        //Clicar no campo com o name "password" que está dentro do formulário de id "signinbox"
+        //Clicar no campo com o name "password" que está dentro do formulário de id "signinbox" o texto "123456"
         formularioSignInbox.findElement(By.name("password")).sendKeys("123456");
 
-        //Clicar no campo com o name "password" que está dentro do formulário de id "signinbox" o texto "123456"
-
         //Clicar no link com o texto "SIGN IN"
         navegador.findElement(By.linkText("SIGN IN")).click();
-        //Validar que dentro do elemento com class "me" está o texto "Hi Julio"
-        WebElement me = navegador.findElement(By.className("me"));
-        String textoNoElementoMe = me.getText();
-        assertEquals("Hi, Julio",textoNoElementoMe);
 
-        //Validação
+        // Clicar em um link que possui a class "me"
+        navegador.findElement(By.className("me")).click();
 
+        // Clicar em link que possui o texto "MORE DATA ABOUT YOU"
+        navegador.findElement(By.linkText("MORE DATA ABOUT YOU")).click();
 
-    }
+        // Clicar no botão através do seu xpath //button[@data-target="addmoredata"]
+        navegador.findElement(By.xpath("//button[@data-target=\"addmoredata\"]")).click();
 
-    @Test
-    public void testAdicionarUmaInformacaoAdicionalDoUsuario0002(){
+        // Identificar a popup onde está o formulário de id addmoredata
+        WebElement popupAddMoreData = navegador.findElement(By.id("addmoredata"));
 
+        // Na combo de name "type" escolher a opção "Phone"
+        WebElement campoType = popupAddMoreData.findElement(By.name("type"));
+        new Select(campoType).selectByVisibleText("Phone");
 
-        //Clicar no link que possui o texto Sign in
-        WebElement linkSignIn = navegador.findElement(By.linkText("Sign in"));
-        linkSignIn.click();
+        // No campo de name "contact" digitar "+5511999999999"
+        popupAddMoreData.findElement(By.name("contact")).sendKeys("5511999999999");
 
-        //Clicar no campo com o name "login" que está dentro do formulário de id "signinbox"
-        WebElement formularioSignInbox = navegador.findElement(By.id("signinbox"));
+        // Clicar no link de text "SAVE" que está na popup
+        popupAddMoreData.findElement(By.linkText("SAVE")).click();
 
-        //Digitar no campo com o name "login" que está dentro do formulário de id "signinbox" o texto "julio0001"
-        formularioSignInbox.findElement(By.name("login")).sendKeys("julio0002");
-
-        //Clicar no campo com o name "password" que está dentro do formulário de id "signinbox"
-        formularioSignInbox.findElement(By.name("password")).sendKeys("654321");
-
-        //Clicar no campo com o name "password" que está dentro do formulário de id "signinbox" o texto "123456"
-
-        //Clicar no link com o texto "SIGN IN"
-        navegador.findElement(By.linkText("SIGN IN")).click();
-        //Validar que dentro do elemento com class "me" está o texto "Hi Julio"
-        WebElement me = navegador.findElement(By.className("me"));
-        String textoNoElementoMe = me.getText();
-        assertEquals("Hi, Julio",textoNoElementoMe);
-
-        //Validação
-
-
+        // Na mensagem de id "toast-container" validar que o texto é "Your contact has been added!"
+        WebElement mensagemPop = navegador.findElement(By.id("toast-container"));
+        String mensagem = mensagemPop.getText();
+        assertEquals("Your contact has been added!", mensagem);
     }
 
     //Notação para reduzir repetições dentro do código, assim depois de qualquer @Test ele faz o que tem dentro do
@@ -99,6 +84,6 @@ public class InformacoesUsuarioTest {
     @After
     public void tearDown(){
         //Fechar o navegador
-        navegador.close();
+        //navegador.close();
     }
 }

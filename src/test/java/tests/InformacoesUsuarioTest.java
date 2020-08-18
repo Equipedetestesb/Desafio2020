@@ -1,7 +1,6 @@
 package tests;
 
 import static org.junit.Assert.*;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,9 +8,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
-
+import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.concurrent.TimeUnit;
+
 
 public class InformacoesUsuarioTest {
     //Declarando navegador para ser usado em todos os métodos desta classe
@@ -21,20 +22,18 @@ public class InformacoesUsuarioTest {
     //Notação para reduzir repetições dentro do código, assim antes de qualquer  @Test ele faz o que tem dentro do
     //Before
     @Before
-    public void setUp(){
+    public void setUp() {
         // Abrindo o navegador
         System.setProperty("webdriver.chrome.driver", "C:\\Desafio2020\\Drivers\\chromedriver\\chromedriver.exe");
         navegador = new ChromeDriver();
         navegador.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
         //Maximizar a tela
         navegador.manage().window().maximize();
 
         //Navegando para a páginado Taskit!
         navegador.get("http://www.juliodelima.com.br/taskit");
-    }
 
-    @Test
-    public void testAdicionarUmaInformacaoAdicionalDoUsuario(){
         //Clicar no link que possui o texto Sign in
         WebElement linkSignIn = navegador.findElement(By.linkText("Sign in"));
         linkSignIn.click();
@@ -56,6 +55,10 @@ public class InformacoesUsuarioTest {
 
         // Clicar em link que possui o texto "MORE DATA ABOUT YOU"
         navegador.findElement(By.linkText("MORE DATA ABOUT YOU")).click();
+    }
+
+    // @Test
+    public void testAdicionarUmaInformacaoAdicionalDoUsuario() {
 
         // Clicar no botão através do seu xpath //button[@data-target="addmoredata"]
         navegador.findElement(By.xpath("//button[@data-target=\"addmoredata\"]")).click();
@@ -79,11 +82,33 @@ public class InformacoesUsuarioTest {
         assertEquals("Your contact has been added!", mensagem);
     }
 
+    @Test
+    public void removerUmContatoDeUmUsuario(){
+        //Clicar no elemento pelo seu xpath //spam[text()="71988094814"]/following-sibling::a
+        navegador.findElement(By.xpath("//spam[text()=\"71988094814\"]/following-sibling::a")).click();
+
+        //Confirmar a janela java script
+        navegador.switchTo().alert().accept();
+
+        //Validar que a mensagem apresentada foi "Rest in peace, dear phone!"
+        WebElement mensagemPop = navegador.findElement(By.id("toast-container"));
+        String mensagem = mensagemPop.getText();
+        assertEquals("Rest in peace, dear phone!", mensagem);
+
+        //Aguardar até 10 segundos para que a mensagem desapareça
+        WebDriverWait aguardar = new WebDriverWait(navegador, timeOutInSeconds: 10);
+        aguardar.until(ExpectedCondition.stalenessOf(mensagemPop));
+
+        //Clicar no link com o texto "Logout"
+        navegador.findElement(By.linkText("Logout")).click();
+    }
+
     //Notação para reduzir repetições dentro do código, assim depois de qualquer @Test ele faz o que tem dentro do
     //After
     @After
-    public void tearDown(){
+    public void tearDown() {
         //Fechar o navegador
         //navegador.close();
     }
+
 }

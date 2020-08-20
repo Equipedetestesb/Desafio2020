@@ -3,14 +3,20 @@ package tests;
 import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import suporte.Generator;
+import suporte.Screenshot;
+
 import java.util.concurrent.TimeUnit;
 
 
@@ -18,7 +24,8 @@ public class InformacoesUsuarioTest {
     //Declarando navegador para ser usado em todos os métodos desta classe
     private WebDriver navegador;
 
-
+    @Rule
+    public TestName test = new TestName();
     //Notação para reduzir repetições dentro do código, assim antes de qualquer  @Test ele faz o que tem dentro do
     //Before
     @Before
@@ -84,8 +91,8 @@ public class InformacoesUsuarioTest {
 
     @Test
     public void removerUmContatoDeUmUsuario(){
-        //Clicar no elemento pelo seu xpath //spam[text()="71988094814"]/following-sibling::a
-        navegador.findElement(By.xpath("//spam[text()=\"71988094814\"]/following-sibling::a")).click();
+        //Clicar no elemento pelo seu xpath //spam[text()="71988099999"]/following-sibling::a
+        navegador.findElement(By.xpath("//spam[text()=\"71988099999\"]/following-sibling::a")).click();
 
         //Confirmar a janela java script
         navegador.switchTo().alert().accept();
@@ -95,9 +102,16 @@ public class InformacoesUsuarioTest {
         String mensagem = mensagemPop.getText();
         assertEquals("Rest in peace, dear phone!", mensagem);
 
+        //continuidade em 19/08/2020 by Adriana Jesus, criado a regra para tirar o print e guardar na pasta.
+
+        String screenshotArquivo = "C:\\Desafio2020\\report" + Generator.dataHoraParaArquivo() + test.getMethodName() + ".png";
+        Screenshot.tirar(navegador, screenshotArquivo);
+        //Screenshot.tirar(navegador, "C:\\Desafio2020\\report" + Generator.dataHoraParaArquivo() + test.getMethodName() + ".png");
+
         //Aguardar até 10 segundos para que a mensagem desapareça
-        WebDriverWait aguardar = new WebDriverWait(navegador, timeOutInSeconds: 10);
-        aguardar.until(ExpectedCondition.stalenessOf(mensagemPop));
+
+        WebDriverWait aguardar = new WebDriverWait(navegador,  10);
+        aguardar.until(ExpectedConditions.stalenessOf(mensagemPop));
 
         //Clicar no link com o texto "Logout"
         navegador.findElement(By.linkText("Logout")).click();
@@ -105,6 +119,7 @@ public class InformacoesUsuarioTest {
 
     //Notação para reduzir repetições dentro do código, assim depois de qualquer @Test ele faz o que tem dentro do
     //After
+
     @After
     public void tearDown() {
         //Fechar o navegador

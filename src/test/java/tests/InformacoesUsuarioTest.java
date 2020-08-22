@@ -98,7 +98,7 @@ public class InformacoesUsuarioTest {
     public void removerUmContatoDeUmUsuario(){
 
         //Clicar no elemento pelo seu xpath //span[text()="71988099999"]/following-sibling::a
-        navegador.findElement(By.xpath("//span[text()=\"+5561992141556\"]/following-sibling::a")).click();
+        navegador.findElement(By.xpath("//span[text()=\"+5561989874757\"]/following-sibling::a")).click();
 
         //Confirmar a janela javascript
         navegador.switchTo().alert().accept();

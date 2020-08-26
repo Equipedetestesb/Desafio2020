@@ -1,7 +1,6 @@
 package tests;
 
 import static org.junit.Assert.*;
-
 import org.easetech.easytest.annotation.DataLoader;
 import org.easetech.easytest.annotation.Param;
 import org.easetech.easytest.runner.DataDrivenTestRunner;
@@ -20,6 +19,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import suporte.Generator;
 import suporte.Screenshot;
+import suporte.Web;
 
 import java.util.concurrent.TimeUnit;
 
@@ -41,15 +41,9 @@ public class InformacoesUsuarioTest {
     //Before
     @Before
     public void setUp(){
-        // Abrindo o navegador
-        System.setProperty("webdriver.chrome.driver", "C:\\Desafio2020\\Drivers\\chromedriver\\chromedriver.exe");
-        navegador = new ChromeDriver();
-        navegador.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        //Maximizar a tela
-        navegador.manage().window().maximize();
 
-        //Navegando para a páginado Taskit!
-        navegador.get("http://www.juliodelima.com.br/taskit");
+        //variável recebe o retorno do método criado na classe Web
+        navegador = Web.createChrome();
 
         //Clicar no link que possui o texto Sign in
         WebElement linkSignIn = navegador.findElement(By.linkText("Sign in"));
@@ -133,6 +127,6 @@ public class InformacoesUsuarioTest {
     @After
     public void tearDown(){
         //Fechar o navegador
-        // navegador.close();
+        //navegador.close();
     }
 }

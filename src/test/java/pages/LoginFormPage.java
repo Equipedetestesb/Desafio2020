@@ -31,7 +31,7 @@ public class LoginFormPage {
 
     }
     public  SecretaPage clicarSignIn(){
-        navegador.findElement(By.linkText("SING IN")).click();
-        return new SecretaPage(navegador)
+        navegador.findElement(By.linkText("Sign in"));
+        return new SecretaPage(navegador);
     }
 }

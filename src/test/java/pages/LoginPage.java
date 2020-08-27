@@ -14,7 +14,8 @@ public class LoginPage {
     }
 
     //método que retorna a página FormPage após o click em SignIn
-    public LoginFormPage clickSignIn(){
+    //Na capitulo 24 Page object(Parte 2) Julio menciona que o metodo pode ser escrito em Portugeus e trocou para clicarSignIn
+    public LoginFormPage clicarSignIn(){
         navegador.findElement(By.linkText("Sign in")).click();
 
         //após o click retorna a página LoginFormPage

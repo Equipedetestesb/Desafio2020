@@ -21,13 +21,15 @@ public class InformacoesUsuarioPageObjectsTest {
     public void testAdicionarUmaInformacaoAdicionalDoUsuario(){
         //uma nova instancia da classe LoginPage com o navegador(criado na classe Web) como parâmetro
         new LoginPage(navegador)
-                //chama os métodos criados nas duas pages objects
-                .clickSignIn()
-                .typeLogin("julio0001");
+                .clicarSignIn()
+                .digitarLogin("julio0001")
+                .digitarSenha("123456")
+                .clicarSignIn();
+
     }
 
     @After
     public void tearDown(){
-        navegador.quit();
+         navegador.quit();
     }
 }

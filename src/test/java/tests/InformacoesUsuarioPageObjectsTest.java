@@ -14,24 +14,35 @@ import suporte.Web;
 
 import static org.junit.Assert.*;
 
+// Anotação com a biblioteca externa 'easytest' inserida no pom.xml para permitir execução através da estratégia DDT
 @RunWith(DataDrivenTestRunner.class)
+// Anotação para carregar um arquivo CSV que contém os dados do teste que repete um mesmo método e varia entradas e processos
+// O arquivo CSV deve ser criado dentro da pasta 'test' inserido em um diretório de nome 'resources'
 @DataLoader(filePaths = "InformacoesUsuarioPageObjectsTest.csv")
+
+// Classe usada como teste dos objetos de páginas para não alterar os primeiros testes
 public class InformacoesUsuarioPageObjectsTest {
+    // Declarando navegador para ser usado em todos os métodos desta classe
     private WebDriver navegador;
 
+    // Notação para reduzir as repetições dentro do código, assim antes de qualquer @Test ele faz o que tem dentro do
+    // Before
     @Before
     public void setUp(){
+        // variável recebe o retorno do método criado na classe Web
         navegador = Web.createChrome();
     }
 
     @Test
     public void testAdicionarUmaInformacaoAdicionalDoUsuario(
+            //captura dos dados do csv
             @Param(name="login")String login,
             @Param(name="senha")String senha,
             @Param(name="tipo")String tipo,
             @Param(name="contato")String contato,
             @Param(name="mensagemEsperada")String mensagemEsperada){
-       String textoToast = new LoginPage(navegador)
+            //faz o fluxo de adição dos dados do usuário e recebe o retorno da mensagem de sucesso
+               String textoToast = new LoginPage(navegador)
                 .clicarSignIn()
                 .fazerLogin(login, senha)
                 .clicarMe()
@@ -40,9 +51,11 @@ public class InformacoesUsuarioPageObjectsTest {
                 .adiocionarContato(tipo, contato)
                 .capturarTextoToast();
 
+               //valida a mensagem de sucesso
         assertEquals(mensagemEsperada, textoToast);
     }
-
+    // Notação para reduzir as repetições dentro do código, assim depois de qualquer @Test ele faz o que tem dentro do
+    // After
     @After
     public void tearDown(){
         //navegador.quit();

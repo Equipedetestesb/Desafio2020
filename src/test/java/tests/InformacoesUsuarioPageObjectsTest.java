@@ -30,7 +30,9 @@ public class InformacoesUsuarioPageObjectsTest {
     @Before
     public void setUp(){
         // variável recebe o retorno do método criado na classe Web
-        navegador = Web.createChrome();
+        //Em 31/08/2020 Autor Adriana Jesus, com base no video do capitulo 28 Julio alterou de Web.createChome p/ createBrowserStack
+        //O navegador vai recever a instancia
+        navegador = Web.createBrowserStack();
     }
 
     @Test

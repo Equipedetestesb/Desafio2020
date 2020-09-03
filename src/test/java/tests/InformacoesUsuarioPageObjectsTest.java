@@ -30,8 +30,6 @@ public class InformacoesUsuarioPageObjectsTest {
     @Before
     public void setUp(){
         // variável recebe o retorno do método criado na classe Web
-        //Em 31/08/2020 Autor Adriana Jesus, com base no video do capitulo 28 Julio alterou de Web.createChome p/ createBrowserStack
-        //O navegador vai recever a instancia
         navegador = Web.createBrowserStack();
     }
 
@@ -43,8 +41,8 @@ public class InformacoesUsuarioPageObjectsTest {
             @Param(name="tipo")String tipo,
             @Param(name="contato")String contato,
             @Param(name="mensagemEsperada")String mensagemEsperada){
-            //faz o fluxo de adição dos dados do usuário e recebe o retorno da mensagem de sucesso
-               String textoToast = new LoginPage(navegador)
+        //faz o fluxo de adição dos dados do usuário e recebe o retorno da mensagem de sucesso
+        String textoToast = new LoginPage(navegador)
                 .clicarSignIn()
                 .fazerLogin(login, senha)
                 .clicarMe()
@@ -53,13 +51,13 @@ public class InformacoesUsuarioPageObjectsTest {
                 .adiocionarContato(tipo, contato)
                 .capturarTextoToast();
 
-               //valida a mensagem de sucesso
+        //valida a mensagem de sucesso
         assertEquals(mensagemEsperada, textoToast);
     }
     // Notação para reduzir as repetições dentro do código, assim depois de qualquer @Test ele faz o que tem dentro do
     // After
     @After
     public void tearDown(){
-        //navegador.quit();
+        navegador.quit();
     }
 }
